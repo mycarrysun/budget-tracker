@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -33,5 +34,7 @@ class AppServiceProvider extends ServiceProvider
         if (! defined('MONEY_FORMAT')) {
             define('MONEY_FORMAT', '%.2n');
         }
+
+        Schema::defaultStringLength(191);
     }
 }
