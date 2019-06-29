@@ -38,18 +38,20 @@
 
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<!-- Left Side Of Navbar -->
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item">
-						<a class="nav-link" href="{{route('expenses.index')}}">Expenses</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{route('income.index')}}">Income</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link"
-						   href="{{route('projection', ['view' => 'd30', 'start_amt' => session()->get('start_amt')])}}">Projection</a>
-					</li>
-				</ul>
+				@if(Auth::id())
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="{{route('expenses.index')}}">Expenses</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{route('income.index')}}">Income</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link"
+							   href="{{route('projection', ['view' => 'd30', 'start_amt' => session()->get('start_amt')])}}">Projection</a>
+						</li>
+					</ul>
+			@endif
 
 				<!-- Right Side Of Navbar -->
 				<ul class="navbar-nav ml-auto">
