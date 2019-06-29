@@ -19,10 +19,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('expenses', 'ExpenseController');
-Route::post('expenses/{id}/restore', 'ExpenseController@restore')->name('expenses.restore');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('expenses', 'ExpenseController');
+    Route::post('expenses/{id}/restore', 'ExpenseController@restore')->name('expenses.restore');
 
-Route::resource('income', 'IncomeController');
-Route::post('income/{id}/restore', 'IncomeController@restore')->name('income.restore');
+    Route::resource('income', 'IncomeController');
+    Route::post('income/{id}/restore', 'IncomeController@restore')->name('income.restore');
 
-Route::get('projection', 'ProjectionController@index')->name('projection');
+    Route::get('projection', 'ProjectionController@index')->name('projection');
+});
