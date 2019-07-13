@@ -46,46 +46,8 @@
 
 					</form>
 
-					@if(isset($items) && count($items))
-						<ul class="list-group list-group-flush">
-							@foreach($items as $item)
-								<li class="list-group-item">
-									<div class="d-flex align-items-center justify-content-between">
-										<div>
-											<div>Date: {{Carbon\Carbon::parse($item->date)->format('M d, Y')}}</div>
-											@if(isset($item->income) && count($item->income))
-												Income:<br>
-												<ul>
-													@foreach($item->income as $income)
-														<li class="d-flex align-items-center justify-content-between">
-															<span>{{$income->name}}</span>
-															<span class="pl-3">{{money_format(MONEY_FORMAT, $income->amount)}}</span>
-														</li>
-													@endforeach
-												</ul>
-											@endif
-											@if(isset($item->expenses) && count($item->expenses))
-												Expenses:<br>
-													<ul>
-														@foreach($item->expenses as $expense)
-															<li class="d-flex align-items-center justify-content-between">
-																<span>{{$expense->name}}</span>
-																<span class="pl-3">{{money_format(MONEY_FORMAT, $expense->amount)}}</span>
-															</li>
-														@endforeach
-													</ul>
-											@endif
-										</div>
-										<div class="d-flex flex-column align-items-end">
-											<h5 class="m-0">Balance: {{money_format(MONEY_FORMAT, $item->balance)}}</h5>
-										</div>
-									</div>
-								</li>
-							@endforeach
-						</ul>
-					@else
-						<div class="card-body">Please enter a starting amount.</div>
-					@endif
+					<projection-graph></projection-graph>
+
 				</div>
 			</div>
 		</div>

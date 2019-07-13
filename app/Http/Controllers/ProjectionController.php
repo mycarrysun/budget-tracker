@@ -10,7 +10,12 @@ use Illuminate\Http\Request;
 
 class ProjectionController extends Controller
 {
-    public function index(Request $request)
+    public function index()
+    {
+        return view('projection.index');
+    }
+
+    public function stats(Request $request)
     {
         $view    = $request->input('view', 'd30');
         $balance = (double) $request->input('start_amt');
@@ -39,14 +44,33 @@ class ProjectionController extends Controller
 
         $items = $this->getNthDaysOfProjectedBalance($request, $days, $balance);
 
-        return view('projection.index', [
-            'items' => $items,
-        ]);
+        $data = [
+            'labels'   => $items->map(function ($item) {
+                return $item->date->toDayDateTimeString();
+            }),
+            'datasets' => [
+                [
+                    'label'           => 'Projections',
+                    'data'            => $items->pluck('balance'),
+                    'backgroundColor' => $items->map(function ($item) {
+                        return $item->balance > 0 ? 'green' : 'red';
+                    }),
+                    'footer'          => $items->map(function ($item) {
+                        return $item->income->pluck('label')->implode("\n");
+                    }),
+                    'afterFooter'     => $items->map(function ($item) {
+                        return $item->expenses->pluck('label')->implode("\n");
+                    }),
+                ],
+            ],
+        ];
+
+        return $data;
     }
 
     public function getNthDaysOfProjectedBalance(Request $request, int $days, float $balance)
     {
-        $items = [];
+        $items = collect();
 
         for ($i = 0; $i < $days; $i++) {
             $item       = new \stdClass();

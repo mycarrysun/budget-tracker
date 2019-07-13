@@ -27,4 +27,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('income/{id}/restore', 'IncomeController@restore')->name('income.restore');
 
     Route::get('projection', 'ProjectionController@index')->name('projection');
+
+    Route::get('projection/stats', 'ProjectionController@stats')->name('projection.stats');
 });

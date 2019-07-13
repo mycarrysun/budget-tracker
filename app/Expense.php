@@ -34,6 +34,11 @@ class Expense extends Model
         return Carbon::parse($date)->format('Y-m-d');
     }
 
+    public function getLabelAttribute()
+    {
+        return $this->name.': -'.money_format(MONEY_FORMAT, $this->amount);
+    }
+
     public function setRepeatAttribute($val)
     {
         $this->attributes['repeat'] = $val === 'on';
