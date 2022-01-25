@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  app:
+    container_name: budgettracker
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "8000:8000"
+    restart: always
+    environment:
+      APP_KEY:
+      DB_HOST:
+      DB_DATABASE:
+      DB_USERNAME:
+      DB_PASSWORD:
+    working_dir: /var/www/html
+    command: php artisan serve 0.0.0.0:8000
+
