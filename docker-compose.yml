@@ -8,9 +8,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./:/var/www/html
-    ports:
-      - "8000:8000"
-    restart: always
+    restart: unless-stopped
     environment:
       APP_KEY:
       DB_HOST:
@@ -18,5 +16,21 @@ services:
       DB_USERNAME:
       DB_PASSWORD:
     working_dir: /var/www/html
-    command: php artisan serve 0.0.0.0:8000
+    networks:
+      - budgettracker
 
+  nginx:
+    image: nginx:1-alpine
+    container_name: budgettracker-nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx:/etc/nginx/conf.d
+    networks:
+      - budgettracker
+
+networks:
+  budgettracker:
+    driver: bridge
